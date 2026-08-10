@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "757457922216",
+    "project_id": "vsms-app-3eb24",
+    "storage_bucket": "vsms-app-3eb24.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757457922216:android:fb417b2bdc4a659450ba9d",
+        "android_client_info": {
+          "package_name": "com.example.visitor_management_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDp9184iwOvx09-Uz6T0ZShBYqcZf0TOUo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757457922216:android:88869008c788ba8b50ba9d",
+        "android_client_info": {
+          "package_name": "com.example.vsms_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDp9184iwOvx09-Uz6T0ZShBYqcZf0TOUo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
