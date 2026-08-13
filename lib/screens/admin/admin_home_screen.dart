@@ -42,7 +42,7 @@ class AdminHomeScreen extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
-              childAspectRatio: 1.2,
+              childAspectRatio: 1.1, // Adjusted for better height
               children: [
                 DashboardCard(
                   title: 'Total Visitors Today',
@@ -84,32 +84,49 @@ class AdminHomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            ListTile(
-              leading: const Icon(Icons.group_outlined, color: AppColors.accent),
-              title: const Text('Manage Users & Guards'),
-              trailing: const Icon(Icons.chevron_right, color: Colors.white54),
+            _buildActionTile(
+              icon: Icons.group_outlined,
+              title: 'Manage Users & Guards',
               onTap: () => Navigator.pushNamed(context, AppRoutes.users),
             ),
-            ListTile(
-              leading: const Icon(Icons.apartment, color: AppColors.accent),
-              title: const Text('Manage Apartments'),
-              trailing: const Icon(Icons.chevron_right, color: Colors.white54),
+            _buildActionTile(
+              icon: Icons.apartment,
+              title: 'Manage Apartments',
               onTap: () => Navigator.pushNamed(context, AppRoutes.apartments),
             ),
-            ListTile(
-              leading: const Icon(Icons.bar_chart, color: AppColors.accent),
-              title: const Text('Analytics & PDF Reports'),
-              trailing: const Icon(Icons.chevron_right, color: Colors.white54),
+            _buildActionTile(
+              icon: Icons.bar_chart,
+              title: 'Analytics & PDF Reports',
               onTap: () => Navigator.pushNamed(context, AppRoutes.reports),
             ),
-            ListTile(
-              leading: const Icon(Icons.history, color: AppColors.accent),
-              title: const Text('Activity Audit Logs'),
-              trailing: const Icon(Icons.chevron_right, color: Colors.white54),
+            _buildActionTile(
+              icon: Icons.history,
+              title: 'Activity Audit Logs',
               onTap: () => Navigator.pushNamed(context, AppRoutes.activityLogs),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildActionTile({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        color: AppColors.primaryLight.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+      ),
+      child: ListTile(
+        leading: Icon(icon, color: AppColors.accent),
+        title: Text(title, style: const TextStyle(color: Colors.white)),
+        trailing: const Icon(Icons.chevron_right, color: Colors.white54, size: 20),
+        onTap: onTap,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
       ),
     );
   }

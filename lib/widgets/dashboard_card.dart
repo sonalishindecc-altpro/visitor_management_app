@@ -64,6 +64,7 @@ class _DashboardCardState extends State<DashboardCard>
         },
         onTapCancel: () => _controller.forward(),
         child: Container(
+          constraints: const BoxConstraints(minHeight: 120),
           padding: const EdgeInsets.all(AppSizes.paddingMd),
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -89,13 +90,13 @@ class _DashboardCardState extends State<DashboardCard>
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: widget.color.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(AppSizes.radiusMd),
@@ -103,48 +104,58 @@ class _DashboardCardState extends State<DashboardCard>
                     child: Icon(
                       widget.icon,
                       color: widget.color,
-                      size: 22,
+                      size: 20,
                     ),
                   ),
                   if (widget.subtitle != null)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        color: widget.color.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(AppSizes.radiusFull),
-                      ),
-                      child: Text(
-                        widget.subtitle!,
-                        style: TextStyle(
-                          color: widget.color,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: widget.color.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(AppSizes.radiusFull),
+                        ),
+                        child: Text(
+                          widget.subtitle!,
+                          style: TextStyle(
+                            color: widget.color,
+                            fontSize: 9,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
                 ],
               ),
-              const SizedBox(height: 16),
-              Text(
-                widget.value,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: -0.5,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                widget.title,
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.6),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                ),
+              const SizedBox(height: 12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.value,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    widget.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.6),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
