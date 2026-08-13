@@ -44,7 +44,7 @@ class AuthService extends ChangeNotifier {
       if (uid == null) return false;
       await _loadUserData(uid);
       return _currentUser != null;
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       debugPrint('AuthService.signIn FirebaseAuthException: \${e.code} – \${e.message}');
       return false;
     } catch (e) {
@@ -100,7 +100,7 @@ class AuthService extends ChangeNotifier {
       _currentUser = UserModel.fromMap(userData, uid);
       notifyListeners();
       return true;
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       debugPrint('AuthService.register FirebaseAuthException: \${e.code} – \${e.message}');
       return false;
     } catch (e) {
@@ -136,7 +136,7 @@ class AuthService extends ChangeNotifier {
     _setLoading(true);
     try {
       await _auth.sendPasswordResetEmail(email: email.trim());
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       debugPrint('AuthService.sendPasswordResetEmail error: \${e.code} – \${e.message}');
       rethrow;
     } catch (e) {

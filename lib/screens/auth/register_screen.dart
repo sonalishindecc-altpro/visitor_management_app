@@ -16,7 +16,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
-  UserRole _selectedRole = UserRole.resident;
+  final UserRole _selectedRole = UserRole.resident;
 
   @override
   Widget build(BuildContext context) {

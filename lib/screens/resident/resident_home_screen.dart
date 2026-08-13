@@ -25,8 +25,10 @@ class ResidentHomeScreen extends StatelessWidget {
     );
 
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBg,
       appBar: AppBar(
         title: const Text('My Home (Flat A-102)'),
+        backgroundColor: AppColors.primary,
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
@@ -43,6 +45,15 @@ class ResidentHomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const Text(
+              'Resident Dashboard',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
@@ -65,6 +76,34 @@ class ResidentHomeScreen extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            const SizedBox(height: 24),
+            const Text(
+              'Quick Actions',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 12),
+            _buildActionTile(
+              context,
+              icon: Icons.add_moderator,
+              title: 'Pre-register a Guest',
+              onTap: () => Navigator.pushNamed(context, AppRoutes.preRegister),
+            ),
+            _buildActionTile(
+              context,
+              icon: Icons.history,
+              title: 'My Visitor History',
+              onTap: () => Navigator.pushNamed(context, AppRoutes.visitorHistory),
+            ),
+            _buildActionTile(
+              context,
+              icon: Icons.help_outline,
+              title: 'Contact Society Office',
+              onTap: () {},
             ),
             const SizedBox(height: 24),
             const Text(
@@ -96,9 +135,30 @@ class ResidentHomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColors.accent,
         foregroundColor: Colors.black,
-        icon: const Icon(Icons.add_moderator),
-        label: const Text('PRE-REGISTER GUEST', style: TextStyle(fontWeight: FontWeight.bold)),
+        icon: const Icon(Icons.add),
+        label: const Text('NEW PASS', style: TextStyle(fontWeight: FontWeight.bold)),
         onPressed: () => Navigator.pushNamed(context, AppRoutes.preRegister),
+      ),
+    );
+  }
+
+  Widget _buildActionTile(BuildContext context, {
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        color: AppColors.primaryLight.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+      ),
+      child: ListTile(
+        leading: Icon(icon, color: AppColors.accent),
+        title: Text(title, style: const TextStyle(color: Colors.white)),
+        trailing: const Icon(Icons.chevron_right, color: Colors.white54, size: 20),
+        onTap: onTap,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSizes.radiusMd)),
       ),
     );
   }
