@@ -138,6 +138,24 @@ class _UsersScreenState extends State<UsersScreen> {
         backgroundColor: AppColors.accent,
         onPressed: _showAddUserDialog,
         child: const Icon(Icons.add, color: Colors.black),
+<<<<<<< Updated upstream
+=======
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Add User'),
+              content: const Text('Add-user form will go here (name, role, email fields).'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Close'),
+                ),
+              ],
+            ),
+          );
+        },
+>>>>>>> Stashed changes
       ),
     );
   }
@@ -192,6 +210,43 @@ class UserTile extends StatelessWidget {
             ),
           ],
         ),
+<<<<<<< Updated upstream
+=======
+        title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text('$role • $email'),
+        trailing: PopupMenuButton<String>(
+          icon: const Icon(Icons.more_vert),
+          onSelected: (value) {
+            if (value == 'edit') {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Edit $name — form coming soon')),
+              );
+            } else if (value == 'delete') {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Remove user?'),
+                  content: Text('This will remove $name from the system.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Remove', style: TextStyle(color: Colors.red)),
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
+          itemBuilder: (context) => [
+            const PopupMenuItem(value: 'edit', child: Text('Edit')),
+            const PopupMenuItem(value: 'delete', child: Text('Delete')),
+          ],
+        ),
+>>>>>>> Stashed changes
       ),
     );
   }

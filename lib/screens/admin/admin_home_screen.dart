@@ -42,7 +42,11 @@ class AdminHomeScreen extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
+<<<<<<< Updated upstream
               childAspectRatio: 1.1, // Adjusted for better height
+=======
+              childAspectRatio:  0.85,
+>>>>>>> Stashed changes
               children: [
                 DashboardCard(
                   title: 'Total Visitors Today',
