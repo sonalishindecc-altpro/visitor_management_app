@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/routes/app_routes.dart';
 import '../../models/user_model.dart';
+import '../../services/auth_service.dart';
 import '../../widgets/app_button.dart';
 import '../../widgets/app_text_field.dart';
 
@@ -18,24 +20,73 @@ class _LoginScreenState extends State<LoginScreen> {
   UserRole _selectedRole = UserRole.security;
   bool _isLoading = false;
 
-  void _handleLogin() {
-    setState(() => _isLoading = true);
-    Future.delayed(const Duration(seconds: 1), () {
-      if (!mounted) return;
-      setState(() => _isLoading = false);
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
-      switch (_selectedRole) {
-        case UserRole.admin:
-          Navigator.pushReplacementNamed(context, AppRoutes.adminHome);
-          break;
-        case UserRole.security:
-          Navigator.pushReplacementNamed(context, AppRoutes.securityHome);
-          break;
-        case UserRole.resident:
-          Navigator.pushReplacementNamed(context, AppRoutes.residentHome);
-          break;
+  Future<void> _handleLogin() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter email and password')),
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      final authService = Provider.of<AuthService>(context, listen: false);
+      final success = await authService.signIn(email, password);
+
+      if (!mounted) return;
+
+      if (success) {
+        final user = authService.currentUser;
+        if (user != null) {
+          // Verify if the logged in user matches the selected role
+          if (user.role != _selectedRole) {
+            await authService.signOut();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Unauthorized: This account is registered as ${user.roleDisplayName}')),
+            );
+            return;
+          }
+
+          // Navigate based on role
+          switch (user.role) {
+            case UserRole.admin:
+              Navigator.pushReplacementNamed(context, AppRoutes.adminHome);
+              break;
+            case UserRole.security:
+              Navigator.pushReplacementNamed(context, AppRoutes.securityHome);
+              break;
+            case UserRole.resident:
+              Navigator.pushReplacementNamed(context, AppRoutes.residentHome);
+              break;
+          }
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Login failed. Please check your credentials.')),
+        );
       }
-    });
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('An error occurred: $e')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   @override

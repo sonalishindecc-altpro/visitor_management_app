@@ -78,3 +78,13 @@ flutter:
           weight: 600
         - asset: assets/fonts/Poppins-Bold.ttf
           weight: 700
+
+# App Icon Configuration
+icons_launcher:
+  image_path: "assets/images/app_icon.jpeg"
+  platforms:
+    android:
+      enable: true
+      folder_name: "mipmap"
+    ios:
+      enable: true

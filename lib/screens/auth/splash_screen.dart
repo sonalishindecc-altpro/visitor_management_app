@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/routes/app_routes.dart';
+import '../../models/user_model.dart';
+import '../../services/auth_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -33,11 +36,39 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    Future.delayed(const Duration(seconds: 3), () {
-      if (mounted) {
-        Navigator.pushReplacementNamed(context, AppRoutes.login);
+    _navigateToNext();
+  }
+
+  Future<void> _navigateToNext() async {
+    await Future.delayed(const Duration(seconds: 3));
+    
+    if (!mounted) return;
+
+    final authService = Provider.of<AuthService>(context, listen: false);
+    
+    if (authService.isLoading) {
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
+
+    if (authService.isLoggedIn) {
+      final user = authService.currentUser;
+      if (user != null) {
+        switch (user.role) {
+          case UserRole.admin:
+            Navigator.pushReplacementNamed(context, AppRoutes.adminHome);
+            break;
+          case UserRole.security:
+            Navigator.pushReplacementNamed(context, AppRoutes.securityHome);
+            break;
+          case UserRole.resident:
+            Navigator.pushReplacementNamed(context, AppRoutes.residentHome);
+            break;
+        }
+        return;
       }
-    });
+    }
+
+    Navigator.pushReplacementNamed(context, AppRoutes.login);
   }
 
   @override
