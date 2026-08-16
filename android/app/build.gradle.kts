@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.visitor_management_app"
+    namespace = "com.spbscc.visitor_management_app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -17,7 +17,7 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
     defaultConfig {
-        applicationId = "com.example.visitor_management_app"
+        applicationId = "com.spbscc.visitor_management_app"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
